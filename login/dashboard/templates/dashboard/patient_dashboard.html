@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard</title>
+    <style>
+        table {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 1rem;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background: #58bc82;
+            color: white;
+        }
+        .dashboard-title {
+            text-align: center;
+        }
+        .upload-blog-btn {
+            font-family: monospace;
+            background-color: #f3f7fe;
+            color: #58bc82;
+            border: none;
+            border-radius: 8px;
+            width: 150px;
+            height: 50px;
+            display: inline-block;
+            text-align: center;
+            line-height: 50px;
+            text-decoration: none;
+            transition: background-color 0.3s, box-shadow 0.3s, color 0.3s;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .upload-blog-btn:hover {
+            background-color: #58bc82;
+            box-shadow: 0 0 0 5px rgba(83, 202, 168, 0.3);
+            color: #fff;
+        }
+        .doctor-list {
+            margin-top: 20px;
+        }
+
+        .doctor-list table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .doctor-list th, .doctor-list td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        .doctor-list th {
+            background-color: #58bc82;
+            color: white;
+        }
+
+        .doctor-list img {
+            max-width: 50px;
+            max-height: 50px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-title">
+        <h1>Patient Dashboard</h1>
+    </div>
+    <table>
+        <tr>
+            <th>First Name</th>
+            <td>{{ user.first_name }}</td>
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <td>{{ user.last_name }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <th>Address</th>
+            <td>{{ user.address_line1 }}, {{ user.city }}, {{ user.state }}, {{ user.pincode }}</td>
+        </tr>
+        <tr>
+            <th>Profile Picture</th>
+            <td>
+                {% if user.profile_picture %}
+                    <img src="{{ user.profile_picture.url }}" alt="Profile Picture" style="max-width: 100px; max-height: 100px;">
+                {% else %}
+                    No profile picture uploaded.
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+    <a href="{% url 'dashboard:blog_post_list' %}" class="upload-blog-btn">
+        View Blogs
+    </a>
+    <div class="doctor-list">
+        <h2>Doctors List</h2>
+        <table>
+            <tr>
+                <th>Profile Picture</th>
+                <th>Name</th>
+                <th>Specialty</th>
+                <th>Action</th>
+            </tr>
+            {% for doctor in doctors %}
+            <tr>
+                <td>
+                    {% if doctor.profile_picture %}
+                    <img src="{{ doctor.profile_picture.url }}" alt="{{ doctor.username }}">
+                    {% else %}
+                        No Image
+                    {% endif %}
+                </td>
+                <td>{{ doctor.username }}</td>
+                <td>{{ doctor.specialty }}</td>
+                <td>
+                    <form method="get" action="{% url 'dashboard:book_appointment' doctor.id %}">
+                        <button type="submit" class="book-appointment-btn">Book Appointment</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No doctors available.</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard</title>
+    <style>
+        table {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 1rem;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background: #58bc82;
+            color: white;
+        }
+        .dashboard-title {
+            text-align: center;
+        }
+        .upload-blog-btn {
+            font-family: monospace;
+            background-color: #f3f7fe;
+            color: #58bc82;
+            border: 2px solid black;
+            border-radius: 8px;
+            width: 150px; /* Increased width */
+            height: 50px; /* Increased height */
+            display: inline-block;
+            text-align: center;
+            line-height: 50px; /* Vertically center text */
+            text-decoration: none; /* Remove underline */
+            transition: background-color 0.3s, box-shadow 0.3s, color 0.3s;
+            margin: 0 auto; /* Center horizontally */
+            display: block; /* Ensure block display to take full width */
+        }
+
+        .upload-blog-btn:hover {
+            background-color: #58bc82;
+            box-shadow: 0 0 0 5px rgba#53caa8; /* Soft shadow on hover */
+            color: #fff; /* White text on hover */
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="dashboard-title">
+        <h1>Doctor Dashboard</h1>
+    </div>
+    <table>
+        <tr>
+            <th>First Name</th>
+            <td>{{ user.first_name }}</td>
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <td>{{ user.last_name }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <th>Address</th>
+            <td>{{ user.address_line1 }}, {{ user.city }}, {{ user.state }}, {{ user.pincode }}</td>
+        </tr>
+        <tr>
+            <th>Specialty</th>
+            <td>{{ user.specialty }}</td>
+        </tr>
+        <tr>
+            <th>Profile Picture</th>
+            <td>
+                {% if user.profile_picture %}
+                    <img src="{{ user.profile_picture.url }}" alt="Profile Picture" style="max-width: 100px; max-height: 100px;">
+                {% else %}
+                    No profile picture uploaded.
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+    <a href="{% url 'dashboard:create_blog_post' %}" class="upload-blog-btn">
+        Upload Blog
+    </a>
+    <a href="{% url 'dashboard:blog_post_list' %}" class="upload-blog-btn">
+        View Blogs
+    </a>
+
+</body>
+</html>

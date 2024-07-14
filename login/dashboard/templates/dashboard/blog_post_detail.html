@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        .content {
+            margin-top: 20px;
+        }
+        .author {
+            margin-top: 20px;
+            color: #777;
+        }
+        .blog-post {
+         margin-bottom: 20px;
+        }
+        .post-image {
+            max-width: 50%; 
+            height: auto; 
+            display: block; 
+            margin: 10px auto; 
+            max-height: 500px;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.summary }}</p>
+    {% if post.image %}
+        <img src="{{ post.image.url }}" alt="{{ post.title }} Image" class="post-image">   
+    {% endif %}
+    <p>{{ post.content }}</p>
+    {% if post.is_draft %}
+    <p><strong>Status:</strong> Draft</p>
+    {% else %}
+    <p><strong>Status:</strong> Published</p>
+    {% endif %}
+</body>
+</html>
+</html>

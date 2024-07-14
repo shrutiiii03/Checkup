@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blog Post List</title>
+    <style>
+      .blog-post {
+       margin-bottom: 20px;
+      }
+      .post-image {
+       max-width: 50%; /* Adjust the maximum width as needed */
+       height: auto; /* Maintain aspect ratio */
+       display: block; /* Remove any inline block spacing */
+       margin: 10px auto; /* Center align and add spacing around the image */
+       max-height: 500px;
+      }
+      .upload-blog-btn {
+       font-family: monospace;
+       background-color: #f3f7fe;
+       color: #58bc82;
+       border: 2px solid black;
+       border-radius: 8px;
+       width: 150px; /* Increased width */
+       height: 50px; /* Increased height */
+       display: inline-block;
+       text-align: center;
+       line-height: 50px; /* Vertically center text */
+       text-decoration: none; /* Remove underline */
+       transition: background-color 0.3s, box-shadow 0.3s, color 0.3s;
+       margin: 0 auto; /* Center horizontally */
+       display: block; /* Ensure block display to take full width */
+     }
+
+      .upload-blog-btn:hover {
+       background-color: #58bc82;
+       box-shadow: 0 0 0 5px rgba#53caa8; /* Soft shadow on hover */
+       color: #fff; /* White text on hover */
+      }
+      
+      form {
+        text-align: center;
+      }
+      
+      select[name="category"] {
+        padding: 10px;
+        font-size: 16px;
+        width: 200px; /* Adjust the width as needed */
+        margin-bottom: 10px;
+      }
+        
+    </style>
+</head>
+<body>
+  <form method="get" action="{% url 'dashboard:blog_post_list' %}">
+    <select name="category">
+        <option value="">All Categories</option>
+        {% for category, _ in categories %}
+            <option value="{{ category }}">{{ category }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <input type="submit" value="Filter" class="upload-blog-btn">
+  </form>
+  
+    <h1>Blog Post List</h1>
+    {% for post in posts %}
+    <div class="blog-post">
+        <h2>{{ post.title }}</h2>
+        {% if post.image %}
+            <img src="{{ post.image.url }}" alt="{{ post.title }} Image" class="post-image">
+        {% endif %}
+        <p>{{ post.summary }}</p>
+        <a href="{% url 'dashboard:blog_post_detail' pk=post.pk %}">Read more...</a>
+    </div>
+    {% empty %}
+      <p>No blog posts available.</p>
+    {% endfor %}
+</body>
+</html>
